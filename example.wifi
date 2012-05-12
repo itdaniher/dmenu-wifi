@@ -1,0 +1,5 @@
+#Put me in $HOME
+ProfileName,ESSID,WEPKey,WPAConfLocation,
+school,netgear,,
+home,linksys,aaaaaaaa,,
+work,bluenet,,$HOME/conf/WPA_Passphrase
