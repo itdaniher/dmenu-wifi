@@ -3,7 +3,17 @@
 WIFILE=~/.wifi.csv
 WIFACE=wlan0
 
-if [ "$1" == "$*" ]
+if [ "$1" == "quit" ]
+then
+	exit 0
+elif [ $1 == "status" ]
+then
+	CUR_ESSID=$(/sbin/iwconfig $WIFACE|grep ESSID|awk '{print $4}'|sed s/ESSID://)
+	LINK_QUAL=`iwconfig $WIFACE|grep Quality|awk '{print $2}'|sed -e "s/.*Quality=//"`
+	CUR_IPADR=`/sbin/ifconfig $WIFACE|grep "inet addr"|sed -e "s/.*inet addr://"|sed -e "s/Bcast.*//"`
+	echo $WIFACE: $CUR_ESSID $LINK_QUAL"  "IP: $CUR_IPADR 
+	exit 0
+elif [ "$1" == "$*" ]
 then
 	PROFILE_NAME=$1
 else
@@ -54,10 +64,5 @@ else
 	sudo dhclient -r $WIFACE&>/dev/null
 	sudo dhclient $WIFACE&>/dev/null
 fi
-
-CUR_ESSID=$(/sbin/iwconfig $WIFACE|grep ESSID|awk '{print $4}'|sed s/ESSID://)
-LINK_QUAL=`iwconfig $WIFACE|grep Quality|awk '{print $2}'|sed -e "s/.*Quality=//"`
-CUR_IPADR=`/sbin/ifconfig $WIFACE|grep "inet addr"|sed -e "s/.*inet addr://"|sed -e "s/Bcast.*//"`
-echo $WIFACE: $CUR_ESSID $LINK_QUAL"  "IP: $CUR_IPADR > .wifi_stats
 
 #See LICENSE file for copyright and license details
