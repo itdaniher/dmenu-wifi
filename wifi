@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #WIFI Version 2.8
 
 WIFILE=~/.config/wifi/wifi.csv
